@@ -1,5 +1,5 @@
 # Apis-CodeBridge
-Conjuntos de apis de resultados com diversos provedores. Evolution, Pragmatic, CreedRoomz, Playtech e outros.
+Coleção de APIs para consulta de resultados de jogos de múltiplos provedores, incluindo Evolution, Pragmatic Play, CreedRoomz, Playtech e outros.
 
 # 📡 API CodeBridge – BAC BO
 
