@@ -14,7 +14,7 @@ Coleção de APIs para retornar resultados de jogos ao vivo de plataformas como 
   https://apiscodebridge.squareweb.app/bacbo?token=SEU_TOKEN
   ```
 
-- **Limite:** 1 requisição por IP a cada 60 segundos
+- **Limite:** 1 IP por TOKEN a cada 60 segundos
 
 #### Exemplo de resposta:
 ```json
