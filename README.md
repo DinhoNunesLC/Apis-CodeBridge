@@ -1,35 +1,22 @@
-# Apis-CodeBridge
-Coleção de APIs para consulta de resultados de jogos de múltiplos provedores, incluindo Evolution, Pragmatic Play, CreedRoomz, Playtech e outros.
+# 🎮 Apis‑CodeBridge
 
-# 📡 API CodeBridge – BAC BO
-
-Bem-vindo à API CodeBridge para o jogo **BAC BO**. Esta API fornece os resultados mais recentes do jogo, permitindo que desenvolvedores integrem facilmente essas informações em suas aplicações.
+Coleção de APIs para retornar resultados de jogos ao vivo de plataformas como Evolution, Pragmatic Play, CreedRoomz, Playtech e outras.
 
 ---
 
-## 📘 Descrição
+## 🔗 Endpoints disponíveis
 
-- **Acesso**: Cada token permite um único acesso por IP. Caso deseje trocar de IP, aguarde 1 minuto para a liberação automática.
-- **Formato de Resposta**: JSON contendo uma lista de resultados recentes.
+### ✅ BAC BO
 
----
+- **Método:** `GET`
+- **URL:**  
+  ```
+  https://apiscodebridge.squareweb.app/bacbo?token=SEU_TOKEN
+  ```
 
-## 🔗 Endpoint
+- **Limite:** 1 requisição por IP a cada 60 segundos
 
-```
-GET https://apiscodebridge.squareweb.app/bacbo?token=SEU_TOKEN
-```
-
-**Parâmetros:**
-
-| Parâmetro | Tipo   | Obrigatório | Descrição                         |
-|-----------|--------|-------------|-----------------------------------|
-| token     | string | Sim         | Chave de autenticação da API.     |
-
----
-
-## 📥 Exemplo de Resposta
-
+#### Exemplo de resposta:
 ```json
 {
   "resultados": [
@@ -38,91 +25,49 @@ GET https://apiscodebridge.squareweb.app/bacbo?token=SEU_TOKEN
       "hora": "2025-05-08 23:21:35",
       "resultado": "A",
       "numero": "9"
-    },
-    {
-      "id": 48153,
-      "hora": "2025-05-08 23:20:57",
-      "resultado": "V",
-      "numero": "11"
-    },
-    {
-      "id": 48152,
-      "hora": "2025-05-08 23:19:53",
-      "resultado": "V",
-      "numero": "9"
     }
   ]
 }
 ```
 
-**Campos:**
-
-- `id`: Identificador único do resultado.
-- `hora`: Horário do resultado.
-- `resultado`: Resultado do jogo (A, V, E).
-- `numero`: Número associado ao resultado.
+- **Campos:**
+  - `id`: ID do resultado
+  - `hora`: data/hora do resultado
+  - `resultado`: A (Azul), V (Vermelho), E (Empate)
+  - `numero`: soma dos dados
 
 ---
 
-## 🐍 Exemplo de Uso com Python
+## 🐍 Exemplo de uso em Python
 
 ```python
-import requests
-import time
+import requests, time
 
-# Token de autenticação
 token = "SEU_TOKEN"
-
-# URL da API com o token
 url = f"https://apiscodebridge.squareweb.app/bacbo?token={token}"
-
-# Variável para armazenar os últimos dados exibidos
-resultados_antigos = []
+historico = None
 
 while True:
-    # Enviando a requisição GET
-    response = requests.get(url)
-
-    # Verificando se a resposta foi bem-sucedida (código 200)
-    if response.status_code == 200:
-        # Convertendo o JSON para um dicionário Python
-        dados = response.json()
-
-        # Pega os últimos 5 resultados
-        resultados_novos = [resultado['resultado'] for resultado in dados['resultados'][:5]]
-
-        # Compara com os últimos dados exibidos
-        if resultados_novos != resultados_antigos and resultados_antigos != None:
-            # Atualiza a variável de comparação
-            resultados_antigos = resultados_novos
-
-            # Trata os valores
-            resultado = dados['resultados'][0]['resultado']
-            numero = dados['resultados'][0]['numero']
-
-            # Exibe os últimos 5 resultados
-            print(f"LISTA: {resultados_novos}")
-
-            # Exibe o resultado mais recente
-            print(f"RESULTADO: [{resultado}] NÚMERO: [{numero}]")
-        else:
-            resultados_antigos = resultados_novos
-
+    r = requests.get(url)
+    if r.status_code == 200:
+        dados = r.json()["resultados"][:5]
+        novos = [i["resultado"] for i in dados]
+        if novos != historico:
+            historico = novos
+            atual = dados[0]
+            print(f"LISTA: {novos}")
+            print(f"RESULTADO: [{atual['resultado']}] NÚMERO: [{atual['numero']}]")
     else:
-        print(f"Erro ao acessar a API. Código de status: {response.status_code}")
-
-    # Aguardando antes de fazer uma nova requisição. Mínimo de 1 segundo!
+        print(f"Erro: status {r.status_code}")
     time.sleep(1)
 ```
 
 ---
 
-## 📞 Suporte
+## 👤 Suporte
 
-Em caso de dúvidas ou problemas, entre em contato com **@DinhoNunesLC** no Telegram para obter suporte.
-
----
+- Telegram: [@DinhoNunesLC](https://t.me/DinhoNunesLC)
 
 ## 📄 Licença
 
-Este projeto está licenciado sob a [MIT License](LICENSE).
+- MIT License
