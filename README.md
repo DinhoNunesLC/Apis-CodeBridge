@@ -11,7 +11,7 @@ Coleção de APIs para retornar resultados de jogos ao vivo de plataformas como 
 - **Método:** `GET`
 - **URL:**  
   ```
-  https://apiscodebridge.squareweb.app/bacbo?token=SEU_TOKEN
+  https://apiscb.site/bacbo?token=SEU_TOKEN
   ```
 
 - **Limite:** 1 IP por TOKEN a cada 60 segundos
@@ -44,7 +44,7 @@ Coleção de APIs para retornar resultados de jogos ao vivo de plataformas como 
 import requests, time
 
 token = "SEU_TOKEN"
-url = f"https://apiscodebridge.squareweb.app/bacbo?token={token}"
+url = f"https://apiscb.site/bacbo?token={token}"
 historico = None
 
 while True:
